@@ -1,0 +1,8 @@
+TrainsTestAppointment/.idea/
+TrainsTestAppointment/Library/
+TrainsTestAppointment/Logs/
+TrainsTestAppointment/Temp/
+TrainsTestAppointment/obj/
+TrainsTestAppointment/UserSettings/
+*.sln
+TrainsTestAppointment/Packages/packages-lock.json
