@@ -17,6 +17,12 @@ namespace c1tr00z.TrainsAppointment.Map {
 
         #endregion
 
+        #region Accessors
+
+        public List<Path> AllPaths => _paths;
+
+        #endregion
+
         #region Class Implementation
 
         public void Init(bool reinit) {
@@ -72,6 +78,10 @@ namespace c1tr00z.TrainsAppointment.Map {
 
         public List<Path> GetNodePaths(Node node) {
             return _paths.Where(p => p.Nodes.Contains(node)).ToList();
+        }
+
+        public List<Node> GetAllNodes() {
+            return _paths.SelectMany(p => p.Nodes).ToUniqueList();
         }
 
         public void ResetPathsValues() {
