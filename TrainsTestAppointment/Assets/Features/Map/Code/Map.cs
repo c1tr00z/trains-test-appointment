@@ -13,6 +13,8 @@ namespace c1tr00z.TrainsAppointment.Map {
 
         [SerializeField] private List<Path> _paths = new();
 
+        [SerializeField] private Node _nodePrefab;
+
         #endregion
 
         #region Class Implementation
@@ -53,15 +55,29 @@ namespace c1tr00z.TrainsAppointment.Map {
         }
 
         private Node MakeNode(Vector3 point) {
-            var nodeGO = new GameObject($"Node{_paths.Count}_{Random.Range(0, 9999)}");
-            var node = nodeGO.AddComponent<Node>();
+            var node = Instantiate<Node>(_nodePrefab);
+            node.gameObject.name = $"Node{_paths.Count}_{Random.Range(0, 9999)}";
             node.transform.position = point;
             node.transform.parent = transform;
             return node;
         }
 
+        public void MakeAnotherNode(Node parentNode) {
+            var parentPath = GetNodePaths(parentNode).FirstOrDefault();
+            var direction = (parentPath.Nodes.FirstOrDefault(n => n != parentNode).transform.position - parentNode.transform.position).normalized;
+            var newPosition = parentNode.transform.position + direction * 10;
+            var newNode = MakeNode(newPosition);
+            _paths.Add(MakePath(parentNode, newNode));
+        }
+
         public List<Path> GetNodePaths(Node node) {
             return _paths.Where(p => p.Nodes.Contains(node)).ToList();
+        }
+
+        public void ResetPathsValues() {
+            _paths.ForEach(p => {
+                p.Length = (p.Nodes[0].transform.position - p.Nodes[1].transform.position).magnitude;
+            });
         }
 
         #endregion
@@ -73,9 +89,6 @@ namespace c1tr00z.TrainsAppointment.Map {
                 return;
             }
 
-            var uniqueNodes = _paths.SelectMany(p => p.Nodes).ToUniqueList();
-            Gizmos.color = Color.green;
-            uniqueNodes.ForEach(n => Gizmos.DrawSphere(n.transform.position, 0.5f));
             Gizmos.color = Color.red;
             _paths.ForEach(p => Gizmos.DrawLine(p.Nodes[0].transform.position, p.Nodes[1].transform.position));
         }
