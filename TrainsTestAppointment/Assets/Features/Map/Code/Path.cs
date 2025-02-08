@@ -9,13 +9,16 @@ namespace c1tr00z.TrainsAppointment.Map {
         
         [SerializeField] private Node _nodeB;
 
-        [SerializeField] private float _length = 50;
-
+        [SerializeField] [HideInInspector] private float _length;
+        
         #endregion
 
         #region Accessors
 
-        public float Length => _length;
+        public float Length {
+            get => _length;
+            set => _length = value;
+        }
 
         public Node[] Nodes => new[] {
             _nodeA, _nodeB

@@ -23,10 +23,9 @@ namespace c1tr00z.TrainsAppointment.Map {
             }
 
             if (_paths.Count > 0) {
+                var allNodes = _paths.SelectMany(p => p.Nodes).ToUniqueList();
+                allNodes.ForEach(n => DestroyImmediate(n.gameObject));
                 _paths.ForEach(path => {
-                    foreach (var pathNode in path.Nodes) {
-                        DestroyImmediate(pathNode.gameObject);
-                    }
                     DestroyImmediate(path.gameObject);
                 });
                 _paths.Clear();
@@ -49,6 +48,7 @@ namespace c1tr00z.TrainsAppointment.Map {
             path.transform.parent = transform;
             path.SetNodeA(nodeA);
             path.SetNodeB(nodeB);
+            path.Length = (nodeA.transform.position - nodeB.transform.position).magnitude;
             return path;
         }
 
@@ -58,6 +58,10 @@ namespace c1tr00z.TrainsAppointment.Map {
             node.transform.position = point;
             node.transform.parent = transform;
             return node;
+        }
+
+        public List<Path> GetNodePaths(Node node) {
+            return _paths.Where(p => p.Nodes.Contains(node)).ToList();
         }
 
         #endregion

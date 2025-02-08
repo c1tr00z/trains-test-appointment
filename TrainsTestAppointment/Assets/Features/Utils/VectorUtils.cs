@@ -11,6 +11,10 @@ namespace c1tr00z.TrainsAppointment.Utils {
             return new Vector3(vector2.x, 0, vector2.y);
         }
 
+        public static Vector2 ToVector2FromHorizontal(this Vector3 vector3) {
+            return new Vector2(vector3.x, vector3.z);
+        }
+
         #endregion
     }
 }
