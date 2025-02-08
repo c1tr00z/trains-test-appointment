@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 namespace c1tr00z.TrainsAppointment.Map.Nodes.Editor {
-    [CustomEditor(typeof(Node))]
+    [CustomEditor(typeof(Node), true)]
     public class NodeInspector : UnityEditor.Editor {
 
         #region Accessors
