@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 namespace c1tr00z.TrainsAppointment.Utils {
     public static class EnumerableUtils {
@@ -12,6 +13,21 @@ namespace c1tr00z.TrainsAppointment.Utils {
                 newList.Add(item);
             }
             return newList;
+        }
+
+        public static T MinElement<T>(this IEnumerable<T> enumerable, Func<T, float> selector) {
+            float minValue = 0;
+            T minItem = default;
+            var hasMinItem = false;
+            foreach (var item in enumerable) {
+                var valueToCompare = selector(item);
+                if (!hasMinItem || minValue > valueToCompare) {
+                    minValue = valueToCompare;
+                    hasMinItem = true;
+                    minItem = item;
+                }
+            }
+            return minItem;
         }
 
         #endregion

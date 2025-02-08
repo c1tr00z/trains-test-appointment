@@ -1,3 +1,4 @@
+using System;
 using c1tr00z.TrainsAppointment.Map.Nodes;
 using UnityEngine;
 namespace c1tr00z.TrainsAppointment.Map {
@@ -9,13 +10,16 @@ namespace c1tr00z.TrainsAppointment.Map {
         
         [SerializeField] private Node _nodeB;
 
-        [SerializeField] private float _length = 50;
-
+        [SerializeField] [HideInInspector] private float _length;
+        
         #endregion
 
         #region Accessors
 
-        public float Length => _length;
+        public float Length {
+            get => _length;
+            set => _length = value;
+        }
 
         public Node[] Nodes => new[] {
             _nodeA, _nodeB
@@ -31,6 +35,15 @@ namespace c1tr00z.TrainsAppointment.Map {
 
         public void SetNodeB(Node newNodeB) {
             _nodeB = newNodeB;
+        }
+
+        #endregion
+
+        #region Unity Events
+
+        private void OnDrawGizmosSelected() {
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(_nodeA.transform.position, _nodeB.transform.position);
         }
 
         #endregion

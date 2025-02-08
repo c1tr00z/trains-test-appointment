@@ -6,3 +6,5 @@ TrainsTestAppointment/obj/
 TrainsTestAppointment/UserSettings/
 *.sln
 TrainsTestAppointment/Packages/packages-lock.json
+TrainsTestAppointment/Assembly-CSharp.csproj
+TrainsTestAppointment/Assembly-CSharp-Editor.csproj
