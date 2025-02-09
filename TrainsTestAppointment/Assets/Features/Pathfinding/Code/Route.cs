@@ -6,7 +6,7 @@ namespace c1tr00z.TrainsAppointment.Pathfinding {
     public class Route : Queue<RoutePart> {
         #region Class Implementation
 
-        public float CalculatePrice(float speed, float miningSpeed) {
+        public float CalculatePrice(float speed, float timeToMine) {
             var allPaths = this.ToList();
             var timeToFinish = 0f;
             
@@ -14,7 +14,7 @@ namespace c1tr00z.TrainsAppointment.Pathfinding {
                 var path = allPaths[i];
                 timeToFinish += path.lenght / speed;
                 if (path.targetNode is Mine mine) {
-                    timeToFinish += mine.MiningMultiplier * miningSpeed;
+                    timeToFinish += mine.MiningMultiplier * timeToMine;
                 }
             }
 
