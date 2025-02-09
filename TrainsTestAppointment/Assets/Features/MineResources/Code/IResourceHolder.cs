@@ -1,4 +1,4 @@
-namespace Features.MineResources.Code {
+namespace c1tr00z.TrainsAppointment.MineResources {
     public interface IResourceHolder {
 
         #region Accessors

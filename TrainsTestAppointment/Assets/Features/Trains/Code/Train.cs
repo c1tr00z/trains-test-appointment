@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using c1tr00z.TrainsAppointment.Map;
 using c1tr00z.TrainsAppointment.Map.Nodes;
+using c1tr00z.TrainsAppointment.MineResources;
 using c1tr00z.TrainsAppointment.Pathfinding;
 using c1tr00z.TrainsAppointment.Utils;
-using Features.MineResources.Code;
 using UnityEngine;
 using Random = UnityEngine.Random;
 namespace c1tr00z.TrainsAppointment.Trains {

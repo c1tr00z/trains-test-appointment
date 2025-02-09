@@ -1,14 +1,8 @@
 using System;
-using Features.MineResources.Code;
+using c1tr00z.TrainsAppointment.MineResources;
 using UnityEngine;
 namespace c1tr00z.TrainsAppointment.Map.Nodes {
     public class Base : Node, IPassableNode {
-
-        #region Events
-
-        public static event Action<float> ResourceCollected;
-
-        #endregion
         
         #region Serialized Fields
 
@@ -34,7 +28,7 @@ namespace c1tr00z.TrainsAppointment.Map.Nodes {
             }
             
             resourceHolder.RemoveResource();
-            ResourceCollected?.Invoke(_currencyMultiplier);
+            ResourcesUtils.OnResourceCollected(_currencyMultiplier);
         }
 
         #endregion
