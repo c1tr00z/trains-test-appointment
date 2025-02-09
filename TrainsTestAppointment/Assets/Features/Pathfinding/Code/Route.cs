@@ -25,6 +25,11 @@ namespace c1tr00z.TrainsAppointment.Pathfinding {
             throw new Exception("Wrong path. Last node is not Base");
         }
 
+        public void AddToRoute(Route other) {
+            var otherList = other.ToList();
+            otherList.ForEach(Enqueue);
+        }
+
         #endregion
     }
 }

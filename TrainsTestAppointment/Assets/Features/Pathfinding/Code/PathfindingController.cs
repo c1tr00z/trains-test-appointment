@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using c1tr00z.TrainsAppointment.Map;
 using c1tr00z.TrainsAppointment.Map.Nodes;
+using c1tr00z.TrainsAppointment.Utils;
+using Unity.VisualScripting;
 using UnityEngine;
 namespace c1tr00z.TrainsAppointment.Pathfinding {
     public class PathfindingController : MonoBehaviour {
@@ -26,18 +28,45 @@ namespace c1tr00z.TrainsAppointment.Pathfinding {
 
         #region Class Implementation
 
-        public Route FindAllPossiblePaths() {
-            // var allPaths = Map.AllPaths.ToList();
-            // var allNodes = Map.GetAllNodes();
-            // var allMines = allNodes.OfType<Mine>().ToList();
-            // var allBases = allNodes.OfType<Base>().ToList();
-            // allMines.ForEach(m => {
-            //     var startPaths = allPaths.Where(p => p.Nodes.Contains(m)).ToList();
-            //     var allRoutesFound = new List<List<Path>>();
-            //     var allChainedNodes = new List<List<Node>>();
-            // });
-            return new Route();
+        public List<Route> FindAllPossibleRoutes(Node startNode, Node targetNode) {
+            var allPossiblePaths = FindPaths(startNode, targetNode, startNode, new List<Path>());
+            return allPossiblePaths.Select(paths => paths.ToRoute(startNode)).Where(r => r.LastOrDefault().targetNode == targetNode).ToList();
         }
+
+        private List<List<Path>> FindPaths(Node startNode, Node targetNode, Node lastNode, List<Path> takenPaths) {
+            var result = new List<List<Path>>();
+            if (takenPaths.Count == 0) {
+                var initialPaths = startNode.GetPaths();
+                foreach (var path in initialPaths) {
+                    var otherNode = path.Nodes.FirstOrDefault(n => n != startNode);
+                    if (otherNode == targetNode) {
+                        result.Add(new List<Path> { path });
+                        continue;
+                    }
+                    var newTakenPaths = new List<Path> { path };
+                    result.AddRange(FindPaths(startNode, targetNode, otherNode, newTakenPaths));
+                }
+                return result;
+            }
+
+            var lastNodePaths = lastNode.GetPaths().Where(p => !takenPaths.Contains(p)).ToList();
+            if (lastNodePaths.Count == 0) {
+                return new List<List<Path>> {
+                    takenPaths
+                };
+            }
+            foreach (var path in lastNodePaths) {
+                var otherNode = path.Nodes.FirstOrDefault(n => n != lastNode);
+                var newTakenPaths = takenPaths.ToList();
+                newTakenPaths.Add(path);
+                result.AddRange(FindPaths(startNode, targetNode, otherNode, newTakenPaths));
+            }
+            
+            return result;
+        }
+
+        
+        
 
         // private bool FindNextPaths(Node startNode, Node targetNode, List<List<Path>> allRoutesFound, List<List<Node>> allChainedNodes, List<Path> allPaths) {
         //     if (allRoutesFound.Count == 0) {

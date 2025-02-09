@@ -29,6 +29,31 @@ namespace c1tr00z.TrainsAppointment.Utils {
             }
             return minItem;
         }
+        
+        public static T MaxElement<T>(this IEnumerable<T> enumerable, Func<T, float> selector) {
+            float maxValue = 0;
+            T maxItem = default;
+            var hasMaxItem = false;
+            foreach (var item in enumerable) {
+                var valueToCompare = selector(item);
+                if (!hasMaxItem || maxValue < valueToCompare) {
+                    maxValue = valueToCompare;
+                    hasMaxItem = true;
+                    maxItem = item;
+                }
+            }
+            return maxItem;
+        }
+
+        public static Queue<T> ToQueue<T>(this IEnumerable<T> enumerable) {
+            var queue = new Queue<T>();
+
+            foreach (var item in enumerable) {
+                queue.Enqueue(item);
+            }
+            
+            return queue;
+        }
 
         #endregion
     }
