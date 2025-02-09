@@ -76,6 +76,22 @@ namespace c1tr00z.TrainsAppointment.Trains {
             }
         }
 
+        private void OnDrawGizmosSelected() {
+            if (_targetNode is not null) {
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawLine(transform.position, _targetNode.transform.position);
+            }
+            if (_route.Count > 0) {
+                Gizmos.color = Color.yellow;
+                var allRouteParts = _route.ToList();
+                allRouteParts.ForEach(p => Gizmos.DrawLine(p.targetNode.transform.position, p.startNode.transform.position));
+            }
+        }
+
+        #endregion
+
+        #region Class Implementation
+
         private void FindRoute() {
             var allMines = MapUtils.GetAllMines();
             var allBases = MapUtils.GetAllBases();
@@ -96,18 +112,6 @@ namespace c1tr00z.TrainsAppointment.Trains {
             });
             _route = allRoutes.MaxElement(r => r.CalculatePrice(_speed, _timeToMine));
             _routePart = _route.Dequeue();
-        }
-
-        private void OnDrawGizmos() {
-            if (_targetNode is not null) {
-                Gizmos.color = Color.cyan;
-                Gizmos.DrawLine(transform.position, _targetNode.transform.position);
-            }
-            if (_route.Count > 0) {
-                Gizmos.color = Color.yellow;
-                var allRouteParts = _route.ToList();
-                allRouteParts.ForEach(p => Gizmos.DrawLine(p.targetNode.transform.position, p.startNode.transform.position));
-            }
         }
 
         #endregion
