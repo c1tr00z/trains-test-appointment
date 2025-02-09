@@ -1,5 +1,5 @@
 using System.Collections;
-using Features.MineResources.Code;
+using c1tr00z.TrainsAppointment.MineResources;
 using UnityEngine;
 namespace c1tr00z.TrainsAppointment.Map.Nodes {
     public class Mine : Node, IPassableNode {
