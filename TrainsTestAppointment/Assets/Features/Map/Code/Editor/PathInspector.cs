@@ -47,6 +47,11 @@ namespace c1tr00z.TrainsAppointment.Map.Editor {
             // path, that will move but will not change lenght
             var radiusPath = moveableNode.GetPaths().FirstOrDefault(p => p != PathObject);
             // node, around which we will rotate moveableNode
+            if (radiusPath is null) {
+                GUILayout.Label($"Lenght: {PathObject.Length}");
+                EditorGUILayout.HelpBox("Immutable path", MessageType.Warning);
+                return;
+            } 
             var centerNode = radiusPath.Nodes.FirstOrDefault(n => n != moveableNode);
             GUILayout.Label($"LLLL: {PathObject.Length}");
             var staticNodePosition = staticNode.transform.position;
